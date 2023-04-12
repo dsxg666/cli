@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"context"
@@ -28,7 +28,7 @@ func (flg *flagger) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 
 	if f.NArg() == 0 {
 		if flg.topFlags == nil {
-			fmt.Fprintln(flg.Output, "No top-level flags are defined.")
+			_, _ = fmt.Fprintln(flg.Output, "No top-level flags are defined.")
 		} else {
 			flg.topFlags.PrintDefaults()
 		}
@@ -47,6 +47,6 @@ func (flg *flagger) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 			return ExitSuccess
 		}
 	}
-	fmt.Fprintf(flg.Error, "Subcommand %s not understood\n", f.Arg(0))
+	_, _ = fmt.Fprintf(flg.Error, "Subcommand %s not understood\n", f.Arg(0))
 	return ExitFailure
 }

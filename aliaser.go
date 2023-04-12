@@ -1,4 +1,4 @@
-package main
+package cli
 
 // An aliaser is a Command wrapping another Command but returning a
 // different name as its alias.

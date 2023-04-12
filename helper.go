@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"context"
@@ -36,7 +36,7 @@ func (h *helper) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}
 				return ExitSuccess
 			}
 		}
-		fmt.Fprintf(h.Error, "Subcommand %s not understood\n", f.Arg(0))
+		_, _ = fmt.Fprintf(h.Error, "Subcommand %s not understood\n", f.Arg(0))
 	}
 
 	f.Usage()

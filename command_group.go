@@ -1,4 +1,4 @@
-package main
+package cli
 
 // A CommandGroup represents a set of commands about a common topic.
 type CommandGroup struct {

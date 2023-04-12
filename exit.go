@@ -1,4 +1,4 @@
-package main
+package cli
 
 // An ExitStatus represents a Posix exit status that a subcommand
 // expects to be returned to the shell.
