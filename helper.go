@@ -6,8 +6,6 @@ import (
 	"fmt"
 )
 
-// A helper is a Command implementing a "help" command for
-// a given Commander.
 type helper Commander
 
 func (h *helper) Name() string           { return "help" }
@@ -20,6 +18,7 @@ func (h *helper) Usage() string {
 	all commands and a brief description of each.
 `
 }
+
 func (h *helper) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) ExitStatus {
 	switch f.NArg() {
 	case 0:

@@ -11,8 +11,34 @@ import (
 	"strings"
 )
 
+var DefaultCommander *Commander
+
 func init() {
 	DefaultCommander = NewCommander(flag.CommandLine, path.Base(os.Args[0]))
+}
+
+func Register(cmd Command, group string) {
+	DefaultCommander.Register(cmd, group)
+}
+
+func HelpCommand() Command {
+	return DefaultCommander.HelpCommand()
+}
+
+func FlagsCommand() Command {
+	return DefaultCommander.FlagsCommand()
+}
+
+func CommandsCommand() Command {
+	return DefaultCommander.CommandsCommand()
+}
+
+func ImportantFlag(name string) {
+	DefaultCommander.ImportantFlag(name)
+}
+
+func Execute(ctx context.Context, args ...interface{}) ExitStatus {
+	return DefaultCommander.Execute(ctx, args...)
 }
 
 // Sorting of the commands within a group.
@@ -79,56 +105,4 @@ func dealias(cmd Command) Command {
 	}
 
 	return cmd
-}
-
-// DefaultCommander is the default commander using flag.CommandLine for flags
-// and os.Args[0] for the command name.
-var DefaultCommander *Commander
-
-// Register adds a subcommand to the supported subcommands in the
-// specified group. (Help output is sorted and arranged by group
-// name.)  The empty string is an acceptable group name; such
-// subcommands are explained first before named groups. It is a
-// wrapper around DefaultCommander.Register.
-func Register(cmd Command, group string) {
-	DefaultCommander.Register(cmd, group)
-}
-
-// ImportantFlag marks a top-level flag as important, which means it
-// will be printed out as part of the output of an ordinary "help"
-// subcommand.  (All flags, important or not, are printed by the
-// "flags" subcommand.) It is a wrapper around
-// DefaultCommander.ImportantFlag.
-func ImportantFlag(name string) {
-	DefaultCommander.ImportantFlag(name)
-}
-
-// Execute should be called once the default flags have been
-// initialized by flag.Parse. It finds the correct subcommand and
-// executes it, and returns an ExitStatus with the result. On a usage
-// error, an appropriate message is printed to os.Stderr, and
-// ExitUsageError is returned. The additional args are provided as-is
-// to the Execute method of the selected Command. It is a wrapper
-// around DefaultCommander.Execute.
-func Execute(ctx context.Context, args ...interface{}) ExitStatus {
-	return DefaultCommander.Execute(ctx, args...)
-}
-
-// HelpCommand returns a Command which implements "help" for the
-// DefaultCommander. Use Register(HelpCommand(), <group>) for it to be
-// recognized.
-func HelpCommand() Command {
-	return DefaultCommander.HelpCommand()
-}
-
-// FlagsCommand returns a Command which implements "flags" for the
-// DefaultCommander. Use Register(FlagsCommand(), <group>) for it to be
-// recognized.
-func FlagsCommand() Command {
-	return DefaultCommander.FlagsCommand()
-}
-
-// CommandsCommand returns Command which implements a "commands" subcommand.
-func CommandsCommand() Command {
-	return DefaultCommander.CommandsCommand()
 }

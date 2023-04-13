@@ -20,6 +20,7 @@ func (flg *flagger) Usage() string {
 	top-level flags.)
 `
 }
+
 func (flg *flagger) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) ExitStatus {
 	if f.NArg() > 1 {
 		f.Usage()

@@ -17,6 +17,7 @@ func (l *lister) Usage() string {
 	Print a list of all commands.
 `
 }
+
 func (l *lister) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) ExitStatus {
 	if f.NArg() != 0 {
 		f.Usage()
